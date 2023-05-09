@@ -9,9 +9,13 @@ app.debug = True
 
 # conexion a MYSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URI')
+app.config["SQLALCHEMY_ECHO"] = True
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
+
+from models import *
 with app.app_context():
+    db.init_app(app)
     db.create_all()
 migrate = Migrate(app, db)
 
