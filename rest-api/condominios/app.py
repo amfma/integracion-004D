@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.debug = True
 
 # conexion a MYSQL
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get(['DATABASE_URI'])
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URI')
 app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy()
@@ -35,7 +35,13 @@ def api_reservas():
     if request.method == 'POST':
         headers = {"Content-Type": "application/json"}
         data = request.get_json()
-        reserva = apier.post_reserva(fecha=data['fecha'], rut=data['rut'])
+        reserva = apier.post_reserva(
+            fecha=data['fecha'], 
+            rut=data['rut'], 
+            pagado=data['pagado'],
+            horario_id=data['horario_id'],
+            espacio_comun_id=data['espacio_comun_id'],
+            )
         return make_response('Exitoso', 200, headers)
     
 @app.route('/admin/reservas/del/<int:id>', methods=['DELETE'])
