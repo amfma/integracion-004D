@@ -1,4 +1,6 @@
+from datetime import date
 from app import db
+from dataclasses import dataclass
 
 Base = db.Model
 
@@ -50,16 +52,16 @@ class Directivo(Base):
     contrasena = db.Column(db.String(32), nullable=False)
     condominio_id = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)
 
-
+@dataclass
 class EspacioComun(Base):
 
     __tablename__ = 'espacio_comun'
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    descripcion = db.Column(db.String(50), nullable=False)
-    monto = db.Column(db.Integer())
-    condominio_id = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)
-    tipo_espacio_id = db.Column(db.Integer(), db.ForeignKey('tipo_espacio.id'), nullable=False)
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    descripcion:str = db.Column(db.String(50), nullable=False)
+    monto:int = db.Column(db.Integer())
+    condominio_id:int = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)
+    tipo_espacio_id:int = db.Column(db.Integer(), db.ForeignKey('tipo_espacio.id'), nullable=False)
 
 
 class Estado(Base):
@@ -109,18 +111,18 @@ class Pagos(Base):
     residente_rut = db.Column(db.String(10), db.ForeignKey('residente.rut'), nullable=False)
     unidad_id = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
 
-
+@dataclass
 class Reserva(Base):
 
     __tablename__ = 'reserva'
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    fecha = db.Column(db.TIMESTAMP(), nullable=False)
-    pagado = db.Column(db.String(1))
-    horario_id = db.Column(db.Integer(), db.ForeignKey('horario.id'), nullable=False)
-    espacio_comun_id = db.Column(db.Integer(), db.ForeignKey('espacio_comun.id'), nullable=False)
-    estado_id = db.Column(db.Integer(), db.ForeignKey('estado.id'), nullable=False)
-    residente_rut = db.Column(db.String(10), db.ForeignKey('residente.rut'), nullable=False)
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    fecha:date = db.Column(db.TIMESTAMP(), nullable=False)
+    pagado:str = db.Column(db.String(1))
+    horario_id:int = db.Column(db.Integer(), db.ForeignKey('horario.id'), nullable=False)
+    espacio_comun_id:int = db.Column(db.Integer(), db.ForeignKey('espacio_comun.id'), nullable=False)
+    estado_id:int = db.Column(db.Integer(), db.ForeignKey('estado.id'), nullable=False)
+    residente_rut:str = db.Column(db.String(10), db.ForeignKey('residente.rut'), nullable=False)
 
 
 class Residente(Base):
