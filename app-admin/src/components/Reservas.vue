@@ -1,7 +1,21 @@
 <template>
-    <div class="justify-content-start d-flex h1 ml-5 m-4 font-weight-bold">
+    <div class="justify-content-start d-flex h1 mt-5 mb-5 font-weight-bold">
         Reservas
     </div>
+    <!-- Barra de busqueda -->
+    <div class="row mb-2 mt-3">
+        <div class="col ml-1 striped-border">
+            <button class="btn btn-success" @click="showReservas()">Nueva Reserva</button>
+        </div>
+        <div class="col col-auto">
+            <form class="form-inline" @submit="searchReserva">
+                <label for="reserva_id">Buscar por id:</label>
+                <input type="number" v-model="reserva_id" class="form-control ml-2" id="reserva_id">
+                <button type="submit" class="btn btn-primary ml-2 mr-1">Buscar</button>
+            </form>
+        </div>
+    </div>
+    <!-- Lista reservas -->
     <div class="d-flex justify-content-center">
         
     <table class="table table-striped border">
@@ -29,8 +43,8 @@
         </tbody>
     </table>  
     </div>
-    <div class="striped-border">
-            <button class="btn btn-primary" @click="showReservas()">Hacer Reserva</button>
+    <div class="">
+            
     </div>
 </template>
 
@@ -58,7 +72,8 @@
                 pagado: {
                     0: 'No',
                     1: 'Si'
-                }
+                },
+                reserva_id: 0,
             }
         },
         methods: {
@@ -71,6 +86,17 @@
             },
             showReservas(){
             this.$emit('toggle-reservas')
+            },
+            searchReserva(e){
+                e.preventDefault()
+                // Validación
+                if (this.reserva_id < 0){
+                    alert('Ingrese un id válido')
+                    return
+                }
+
+                const id = this.reserva_id
+                this.$emit('search-reserva', id)
             }
         }
     }

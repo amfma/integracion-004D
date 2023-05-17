@@ -28,7 +28,7 @@ def del_reserva(id):
     db.session.commit()
 
 def get_reserva(id):
-    reserva = Reserva.query.filter_by(id=id).first()
+    reserva = Reserva.query.filter_by(id=id, estado_id=1).first()
     return reserva
 
 def put_reserva(id, fecha):

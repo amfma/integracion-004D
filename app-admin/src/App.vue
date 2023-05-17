@@ -2,7 +2,11 @@
   <NavBar @toggle-reservas="toggleReservas()" />
   <div class="container">
     <div v-if="showReservas">
-      <Reservas :reservas="reservas" @delete-reserva="delReserva"  @toggle-reservas="toggleReservas()" />
+      <Reservas :reservas="reservas" 
+      @delete-reserva="delReserva"  
+      @toggle-reservas="toggleReservas()" 
+      @search-reserva="fetchReserva"
+      />
     </div>
     <div v-if="!showReservas">
       <AddReservas @new-reserva="addReserva" @toggle-reservas="toggleReservas()"/>
@@ -39,6 +43,13 @@ export default {
       const data = await res.json()
       console.log(data)
       return data
+    },
+    //Obtener reserva
+    async fetchReserva(id){
+      console.log(id)
+      const res = await fetch(`api/admin/reservas/${id}`)
+      const data = await res.json()
+      this.reservas = [data]
     },
     //Eliminar reserva
     async delReserva(id){
