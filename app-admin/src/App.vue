@@ -6,6 +6,7 @@
       @delete-reserva="delReserva"  
       @toggle-reservas="toggleReservas()" 
       @search-reserva="fetchReserva"
+      @clear-search="updateReservas"
       />
     </div>
     <div v-if="!showReservas">
@@ -36,6 +37,7 @@ export default {
     //Boton formulario
     toggleReservas(){
       this.showReservas = !this.showReservas
+      this.updateReservas()
     },
     //Obtener reservas
     async fetchReservas(){
