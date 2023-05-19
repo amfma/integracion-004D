@@ -1,5 +1,5 @@
 from app import db
-from models import EspacioComun, Reserva
+from models import EspacioComun, Reserva, Residente, Unidad
 
 def get_espacios():
     espacios = EspacioComun.query.all()
@@ -35,3 +35,19 @@ def put_reserva(id, fecha):
     reserva = Reserva.query.filter_by(id=id).first()
     reserva.fecha = fecha
     db.session.commit()
+
+def get_espacios_condominio(condominio_id):
+    espacios = EspacioComun.query.filter_by(condominio_id=condominio_id).all()
+    return espacios
+
+def get_reservas_espacio(espacio_comun_id):
+    reservas = Reserva.query.filter_by(espacio_comun_id=espacio_comun_id, estado_id=1).all()
+    return reservas
+
+def get_residente(rut):
+    residente = Residente.query.filter_by(rut=rut, estado_id=1).first()
+    return residente
+
+def get_unidad(id):
+    unidad = Unidad.query.filter_by(id=id).first()
+    return unidad

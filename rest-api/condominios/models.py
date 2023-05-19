@@ -124,20 +124,20 @@ class Reserva(Base):
     estado_id:int = db.Column(db.Integer(), db.ForeignKey('estado.id'), nullable=False)
     residente_rut:str = db.Column(db.String(10), db.ForeignKey('residente.rut'), nullable=False)
 
-
+@dataclass
 class Residente(Base):
 
     __tablename__ = 'residente'
 
-    rut = db.Column(db.String(10), primary_key=True)
-    nombres = db.Column(db.String(100), nullable=False)
-    apellidos = db.Column(db.String(100), nullable=False)
-    propietario = db.Column(db.String(1), nullable=False)
-    telefono = db.Column(db.Integer(), nullable=False)
-    correo = db.Column(db.String(100), nullable=False)
-    contrasena = db.Column(db.String(32), nullable=False)
-    estado_id = db.Column(db.Integer(), db.ForeignKey('estado.id'), nullable=False)
-    unidad_id = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
+    rut:str = db.Column(db.String(10), primary_key=True)
+    nombres:str = db.Column(db.String(100), nullable=False)
+    apellidos:str = db.Column(db.String(100), nullable=False)
+    propietario:str= db.Column(db.String(1), nullable=False)
+    telefono:int = db.Column(db.Integer(), nullable=False)
+    correo:str = db.Column(db.String(100), nullable=False)
+    contrasena:str = db.Column(db.String(32), nullable=False)
+    estado_id:int = db.Column(db.Integer(), db.ForeignKey('estado.id'), nullable=False)
+    unidad_id:int = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
 
 
 class TipoEspacio(Base):
@@ -147,11 +147,11 @@ class TipoEspacio(Base):
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     nombre = db.Column(db.String(20), nullable=False)
 
-
+@dataclass
 class Unidad(Base):
 
     __tablename__ = 'unidad'
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    descripcion = db.Column(db.String(10), nullable=False)
-    condominio_id = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    descripcion:str = db.Column(db.String(10), nullable=False)
+    condominio_id:int = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)

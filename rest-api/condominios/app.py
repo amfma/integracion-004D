@@ -61,6 +61,30 @@ def api_reserva(id):
         data = request.get_json()
         reserva = apier.put_reserva(id, fecha=data['fecha'])
 
+@app.route('/residente/espacios/<int:condominio_id>', methods = ['GET'])
+def list_espacios_condiminio(condominio_id):
+    headers = {"Content-Type": "application/json"}
+    espacios = apier.get_espacios_condominio(condominio_id)
+    return make_response(jsonify(espacios), 200, headers)
+
+@app.route('/residente/reservas/<int:espacio_comun_id>', methods = ['GET'])
+def list_reservas_espacio(espacio_comun_id):
+    headers = {"Content-Type": "application/json"}
+    reservas = apier.get_reservas_espacio(espacio_comun_id)
+    return make_response(jsonify(reservas), 200, headers)
+
+@app.route('/residente/residente/<string:rut>', methods=['GET'])
+def api_residente(rut):
+    headers = {"Content-Type": "application/json"}
+    residente = apier.get_residente(rut)
+    return make_response(jsonify(residente), 200, headers)
+
+@app.route('/residente/unidad/<int:id>', methods=['GET'])
+def api_unidad(id):
+    headers = {"Content-Type": "application/json"}
+    unidad = apier.get_unidad(id)
+    return make_response(jsonify(unidad), 200, headers)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
