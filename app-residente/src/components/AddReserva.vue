@@ -1,6 +1,6 @@
 <template>
     <div class="justify-content-center d-flex border m-5 p-5">
-        <form>
+        <form @submit="submitReserva">
             <!-- Selección espacio común -->
             <div class="form-group">
                 <label for="espacio_comun_id">Espacio común</label>
@@ -61,6 +61,7 @@ export default{
             ],
             horario_disabled: true,
             datepicker_disabled: true,
+            rut: '11111111-1'
         }
     },
     methods:{
@@ -111,6 +112,36 @@ export default{
         horarioDisponible(id){
             const horario = this.horario_disponible.find(horario => horario.id === id)
             return horario.disponible
+        },
+        //Submit formulario reserva
+        submitReserva(e){
+            e.preventDefault()
+
+            const reserva = {
+                fecha: this.fecha.toISOString().split('T')[0],
+                rut: this.rut,
+                horario_id: this.horario_id,
+                espacio_comun_id: this.espacio_comun_id
+            }
+
+            if(!reserva.espacio_comun_id){
+                alert('Seleccione un espacio común')
+            }else if(!reserva.fecha){
+                alert('Seleccione una fecha')
+            }else if(!reserva.horario_id){
+                alert('Seleccione un horario')
+            }else{
+                this.$emit('add-reserva', reserva)
+                this.limpiarFormulario()
+            }
+        },
+        //Limpiar formulario
+        limpiarFormulario(){
+            this.fecha = new Date
+            this.horario_id = ''
+            this.espacio_comun_id = ''
+            this.horario_disabled = true
+            this.datepicker_disabled = true
         }
     },
 

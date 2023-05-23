@@ -4,7 +4,7 @@
     :fechas_medio_dia="fechas_medio_dia"
     :fechas_no_disponibles="fechas_no_disponibles"
     @list-fechas="ListFechas"
-    
+    @add-reserva="AddReserva"
     />
   </div>
 </template>
@@ -47,6 +47,19 @@ export default {
       this.fetchReservasEspacio(id_espacio).then((reservas) => {
         reservas.map(r => this.categorizaFechas(r))
       })
+    },
+    async AddReserva(reserva){
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(reserva)
+      }
+      const res = await fetch('api/residente/reservar', requestOptions)
+      if(res.status == 200){
+        alert('Reserva exitosa')
+      }else{
+        alert('No se ha podido realizar la operación')
+      }
     },
     parsear(fecha){
       let date = new Date(fecha)
