@@ -85,6 +85,18 @@ def api_unidad(id):
     unidad = apier.get_unidad(id)
     return make_response(jsonify(unidad), 200, headers)
 
+@app.route('/residente/reservar', methods=['POST'])
+def api_reserva_res():
+    headers = {"Content-Type": "application/json"}
+    data = request.get_json()
+    reserva = apier.post_reserva(
+        fecha = data['fecha'],
+        rut= data['rut'],
+        horario_id= data['horario_id'],
+        espacio_comun_id= data['espacio_comun_id']
+    )
+    return make_response('Exitoso', 200, headers)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-
