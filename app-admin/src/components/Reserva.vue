@@ -21,7 +21,7 @@ export default {
     methods: {
         parsear(fecha){
                 let date = new Date(fecha)
-                return date.toLocaleDateString()
+                return date.toISOString().split('T')[0]
             },
     },
     data(){

@@ -80,15 +80,15 @@ export default{
             }
             //Reestablece fecha
             this.fecha = new Date()
-            // Recarga horarios disponibles
-            this.cargarHorarios()
             //Desbloquea el date picker
             this.datepicker_disabled = false
         },
         // Bloquea horarios no disponibles para la fecha
         cargarHorarios(){
-            const fecha = this.fecha.toLocaleDateString()
+            const fecha = this.fecha.toISOString().split('T')[0]
             const id_horario = this.fechas_medio_dia[fecha]
+            // reestablece el valor de id_horario
+            this.horario_id = ''
             // establece si el horario está disponible para la fecha
             if(id_horario){
                 this.horario_disponible = this.horario_disponible

@@ -40,12 +40,9 @@ export default {
     },
     // Obtiene las fechas de las reservas
     ListFechas(id_espacio){
-      // reestablece listas de fechas
-      this.fechas_medio_dia = {}
-      this.fechas_no_disponibles = []
-      // Obtiene reservas y categoriza las fechas
+
       this.fetchReservasEspacio(id_espacio).then((reservas) => {
-        reservas.map(r => this.categorizaFechas(r))
+        this.categorizaFechas(reservas)
       })
     },
     async AddReserva(reserva){
@@ -61,21 +58,33 @@ export default {
         alert('No se ha podido realizar la operación')
       }
     },
-    parsear(fecha){
+    dateToString(fecha){
       let date = new Date(fecha)
-      return date.toLocaleDateString()
+      return date.toISOString().split('T')[0]
+    },
+    stringToDate(fecha){
+      let parced = fecha.concat('T00:00:00')
+      return new Date(parced)
     },
     // Categoriza la fecha de una reserva
-    categorizaFechas(reserva){
-      let fecha = this.parsear(reserva.fecha)
-      let horario = reserva.horario_id
-      
-      if (fecha in this.fechas_medio_dia){
-        delete this.fechas_medio_dia[fecha]
-        this.fechas_no_disponibles.push(new Date(fecha))
-      }else{
-        this.fechas_medio_dia[fecha] = horario
-      }
+    categorizaFechas(reservas){
+
+      let no_disponibles = []
+      let medio_dia = {}
+
+      reservas.map((reserva)=>{
+        const fecha = this.dateToString(reserva.fecha)
+        const horario = reserva.horario_id
+        
+        if (fecha in medio_dia){
+          delete medio_dia[fecha]
+          no_disponibles.push(this.stringToDate(fecha))
+        }else{
+          medio_dia[fecha] = horario
+        }
+      })
+      this.fechas_medio_dia = medio_dia
+      this.fechas_no_disponibles = no_disponibles
     },
   },
   async created(){
