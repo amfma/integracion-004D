@@ -3,6 +3,7 @@
     <AddReserva :espacios="espacios"
     :fechas_medio_dia="fechas_medio_dia"
     :fechas_no_disponibles="fechas_no_disponibles"
+    :residente="residente"
     @list-fechas="ListFechas"
     @add-reserva="AddReserva"
     />
@@ -22,6 +23,7 @@ export default {
       espacios: [],
       fechas_medio_dia: {}, // fecha con reservas solo am o pm
       fechas_no_disponibles: [], // fecha con reservas am y pm
+      residente: {},
     }
   },
   methods:{
@@ -37,6 +39,12 @@ export default {
       const data = await res.json()
       this.reservas = data
       return data
+    },
+    //Obtener residente
+    async fetchResidente(rut){
+      const res = await fetch(`api/residente/residente/${rut}`)
+      const data = await res.json()
+      this.residente = data
     },
     // Obtiene las fechas de las reservas
     ListFechas(id_espacio){
@@ -89,6 +97,7 @@ export default {
   },
   async created(){
     this.fetchEspacios("1")
+    this.fetchResidente('11111111-1')
   }
 }
 </script>

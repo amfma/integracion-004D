@@ -1,6 +1,12 @@
 <template>
     <div class="justify-content-center d-flex border m-5 p-5">
         <form @submit="submitReserva">
+            <div class="justify-content-start h3 mb-3">
+                Agendar Reserva
+            </div>
+            <infoResidente
+            :residente="residente"
+            />
             <!-- Selección espacio común -->
             <div class="form-group">
                 <label for="espacio_comun_id">Espacio común</label>
@@ -37,6 +43,7 @@
 
 <script>
 import Datepicker from 'vue3-datepicker'
+import infoResidente from './infoResidente.vue'
 
 export default{
     name: 'addReserva',
@@ -44,9 +51,11 @@ export default{
         espacios: Array,
         fechas_medio_dia: Object,
         fechas_no_disponibles: Array,
+        residente: Object,
     },
     components:{
-        Datepicker
+        Datepicker,
+        infoResidente,
     },
     data(){
         return{
