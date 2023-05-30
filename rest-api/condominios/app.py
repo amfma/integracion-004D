@@ -97,7 +97,7 @@ def api_reserva_res():
     )
     return make_response('Exitoso', 200, headers)
 
-@app.route('/residente/multas/<int:id>', methods=['GET'])
+@app.route('/residente/deudas/<int:id>', methods=['GET'])
 def get_deudas(id):
     headers = {"Content-Type": "application/json"}
     gastocomun, multa = apier.get_deudas(unidad_id=id)
