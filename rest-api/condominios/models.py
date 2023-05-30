@@ -71,15 +71,15 @@ class Estado(Base):
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     descripcion = db.Column(db.String(20), nullable=False)
 
-
+@dataclass
 class GastoComun(Base):
 
     __tablename__ = 'gasto_comun'
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    monto = db.Column(db.Integer(), nullable=False)
-    pagado = db.Column(db.String(1), nullable=False)
-    unidad_id = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    monto:int = db.Column(db.Integer(), nullable=False)
+    pagado:str = db.Column(db.String(1), nullable=False)
+    unidad_id:int = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
 
 
 class Horario(Base):
@@ -89,16 +89,16 @@ class Horario(Base):
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     descripcion = db.Column(db.String(10), nullable=False)
 
-
+@dataclass
 class Multa(Base):
 
     __tablename__ = 'multa'
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    monto = db.Column(db.Integer(), nullable=False)
-    concepto = db.Column(db.String(100), nullable=False)
-    pagado = db.Column(db.String(1), nullable=False)
-    unidad_id = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    monto:int = db.Column(db.Integer(), nullable=False)
+    concepto:str = db.Column(db.String(100), nullable=False)
+    pagado:str = db.Column(db.String(1), nullable=False)
+    unidad_id:int = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
 
 
 class Pagos(Base):
