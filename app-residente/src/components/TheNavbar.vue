@@ -11,6 +11,13 @@
             </router-link>
         </a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link">
+            <router-link :to="{ name: 'deudas' }">
+                Deudas
+            </router-link>
+        </a>
+        </li>
     </ul>
     </nav>
 </template>

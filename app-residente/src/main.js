@@ -3,6 +3,7 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 import App from './App.vue'
 // Impotación de componentes
 import Reservas from './views/Reservas'
+import Deudas from '@/views/Deudas'
 
 // Rutas
 const routes = [
@@ -11,6 +12,11 @@ const routes = [
         component: Reservas,
         name: 'reservas'
     },
+    {
+        path: '/deudas',
+        component: Deudas,
+        name: 'deudas'
+    }
 ]
 // Router
 const router = createRouter({
