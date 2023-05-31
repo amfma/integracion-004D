@@ -1,5 +1,9 @@
 <template>
-    <DeudasList/>
+    <DeudasList
+    :gastos_comunes="this.gastos_comunes"
+    :multas="this.multas"
+    :residente="this.residente"
+    />
 </template>
 
 <script>
@@ -13,19 +17,30 @@ export default {
     data(){
         return{
             gastos_comunes: [],
-            multas: []
+            multas: [],
+            residente: {}
         }
     },
     methods:{
         // Obtener deudas (gastos comunes y multas)
         async fetchDeudas(id_condominio){
-            const res = await fetch(`api/residente/espacios/${id_condominio}`)
-            const data = await res.json()
-            if (data.status == '200'){
-                this.gastos_comunes = data.gastocomun
-                this.multas = data.multa
+            const res = await fetch(`api/residente/deudas/${id_condominio}`)
+            if (res.status === 200){
+                const data = await res.json()
+                this.gastos_comunes = data.GastoComun
+                this.multas = data.Multa
             }
         },
+        // Obtener residente
+        async fetchResidente(rut){
+            const res = await fetch(`api/residente/residente/${rut}`)
+            const data = await res.json()
+            this.residente = data
+        },
     },
+    async created(){
+        this.fetchDeudas('1')
+        this.fetchResidente('11111111-1')
+    }
 }
 </script>
