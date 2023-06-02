@@ -1,7 +1,6 @@
 <template>
     <DeudasList
-    :gastos_comunes="this.gastos_comunes"
-    :multas="this.multas"
+    :deudas="this.deudas"
     :residente="this.residente"
     />
 </template>
@@ -16,8 +15,7 @@ export default {
     },
     data(){
         return{
-            gastos_comunes: [],
-            multas: [],
+            deudas: [],
             residente: {}
         }
     },
@@ -27,8 +25,7 @@ export default {
             const res = await fetch(`api/residente/deudas/${id_condominio}`)
             if (res.status === 200){
                 const data = await res.json()
-                this.gastos_comunes = data.GastoComun
-                this.multas = data.Multa
+                this.deudas = data
             }
         },
         // Obtener residente

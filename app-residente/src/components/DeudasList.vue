@@ -3,21 +3,18 @@
         Deudas
     </div>
     <!-- Lista Deudas -->
-    <div v-if="gastos_comunes[0] || multas[0]" class="d-flex justify-content-center">
+    <div v-if="deudas[0]" class="d-flex justify-content-center">
         
     <table class="table table-striped border">
         <thead>
             <th>Concepto</th>
+            <th>Fecha Emisión</th>
+            <th>Fecha Vencimiento</th>
             <th>Monto</th>
         </thead>
-        <tbody :key="multa.id" v-for="multa in multas">
-            <DeudaMulta
-                :multa="multa"
-            />
-        </tbody>
-        <tbody :key="gasto_comun.id" v-for="gasto_comun in gastos_comunes">
-            <DeudaGasto
-                :gasto_comun="gasto_comun"
+        <tbody :key="deuda.id" v-for="deuda in deudas">
+            <DeudaItem
+                :deuda="deuda"
             />
         </tbody>
     </table>
@@ -39,21 +36,18 @@
 </template>
 
 <script>
-import DeudaGasto from './DeudaGasto.vue';
-import DeudaMulta from './DeudaMulta.vue';
+import DeudaItem from './DeudaItem.vue';
 import InfoResidente from './infoResidente.vue';
 
 export  default {
     name: 'DeudasList',
     props:{
-        gastos_comunes: Array,
-        multas: Array,
+        deudas: Array,
         residente: Object,
     },
     components:{
-    DeudaGasto,
-    DeudaMulta,
-    InfoResidente,
-}
+        DeudaItem,
+        InfoResidente,
+    },
 }
 </script>
