@@ -100,12 +100,8 @@ def api_reserva_res():
 @app.route('/residente/deudas/<int:id>', methods=['GET'])
 def get_deudas(id):
     headers = {"Content-Type": "application/json"}
-    gastocomun, multa = apier.get_deudas(unidad_id=id)
-    return_data = {
-        'GastoComun' : gastocomun,
-        'Multa': multa
-    }
-    return make_response(jsonify(return_data), 200, headers)
+    deudas = apier.get_deudas(unidad_id=id)
+    return make_response(jsonify(deudas), 200, headers)
 
 if __name__ == '__main__':
     app.run(debug=True)

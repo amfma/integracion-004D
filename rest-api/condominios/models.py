@@ -72,6 +72,28 @@ class Estado(Base):
     descripcion = db.Column(db.String(20), nullable=False)
 
 @dataclass
+class Deuda(Base):
+    
+    __tablename__ = 'deuda'
+
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    concepto:str = db.Column(db.String(100), nullable=False)
+    monto:int = db.Column(db.Integer(), nullable=False)
+    pagado:str = db.Column(db.String(1), nullable=False) #P:pendiente, S:si, N:no
+    fecha_emision:date = db.Column(db.TIMESTAMP(), nullable=False)
+    fecha_vencimiento:date = db.Column(db.TIMESTAMP(), nullable=False)
+    tipo_deuda_id:int = db.Column(db.Integer(), db.ForeignKey('tipo_deuda.id'), nullable=False) # multa o gasto comun
+    unidad_id:int = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
+
+class TipoDeuda(Base):
+
+    __tablename__ = 'tipo_deuda'
+
+    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    descripcion = db.Column(db.String(20), nullable=False)
+
+#DEPRECADA
+@dataclass
 class GastoComun(Base):
 
     __tablename__ = 'gasto_comun'
@@ -89,6 +111,7 @@ class Horario(Base):
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     descripcion = db.Column(db.String(10), nullable=False)
 
+#DEPRECADA
 @dataclass
 class Multa(Base):
 

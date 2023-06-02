@@ -1,5 +1,5 @@
 from app import db
-from models import EspacioComun, Reserva, Residente, Unidad, GastoComun, Multa
+from models import EspacioComun, Reserva, Residente, Unidad, Deuda
 
 def get_espacios():
     espacios = EspacioComun.query.all()
@@ -53,6 +53,5 @@ def get_unidad(id):
     return unidad
 
 def get_deudas(unidad_id):
-    gastocomun = GastoComun.query.filter_by(unidad_id=unidad_id).all()
-    multa = Multa.query.filter_by(unidad_id=unidad_id).all()
-    return gastocomun, multa
+    deudas = Deuda.query.filter_by(unidad_id=unidad_id, pagado='N').all()
+    return deudas
