@@ -4,6 +4,16 @@
         <td>{{ fecha_emision }}</td>
         <td>{{ fecha_vencimiento }}</td>
         <td>{{ monto }}</td>
+        <td>
+            <label class="custom-control custom-checkbox">
+                <input 
+                type="checkbox" 
+                class="form-check-input"
+                :checked="this.checked"
+                @change="seleccionaDeuda($event.target.checked)"
+                >Agregar
+            </label>
+        </td>
     </tr>
 </template>
 
@@ -13,6 +23,12 @@ export default{
     name: 'DeudaItem',
     props:{
         deuda: Object,
+        allChecked: Boolean,
+    },
+    data(){
+        return{
+            checked: false
+        }
     },
     computed:{
         monto(){
@@ -42,6 +58,20 @@ export default{
         dateToString(fecha){
             let date = new Date(fecha)
             return date.toISOString().split('T')[0]
+        },
+        // recalcula el total
+        seleccionaDeuda(checked){
+            if (checked != this.checked){
+                const monto = this.deuda.monto
+                const id = this.deuda.id
+                this.$emit('selecciona-deuda', checked, monto, id)
+                this.checked = !this.checked
+            }
+        },
+    },
+    watch:{
+        allChecked(isAllChecked){
+            this.seleccionaDeuda(isAllChecked)
         },
     }
 }

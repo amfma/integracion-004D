@@ -1,17 +1,29 @@
 <template>
+    <div class="justify-content-start d-flex h1 mt-5 mb-4 font-weight-bold">
+        Deudas
+    </div>
     <DeudasList
     :deudas="this.deudas"
-    :residente="this.residente"
     />
+    <!-- Barra superior-->
+    <div class="row mt-1 justify-content-start">
+        <div class="col col-auto">
+            <infoResidente
+            :residente="residente"
+            />
+        </div>
+    </div>
 </template>
 
 <script>
 import DeudasList from '@/components/DeudasList.vue';
+import infoResidente from '@/components/infoResidente.vue';
 
 export default {
     name: 'DeudasView',
     components: {
-        DeudasList
+        DeudasList,
+        infoResidente,
     },
     data(){
         return{
