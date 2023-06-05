@@ -3,7 +3,7 @@ insert into horario (descripcion) values ('AM');
 insert into horario (descripcion) values ('PM');
 insert into estado (descripcion) values ('Activo');
 insert into estado (descripcion) values ('Anulado');
-insert into unidad (descripcion, condominio_id) values ('A14', 1);
+insert into unidad (descripcion, condominio_id, alicuota) values ('A14', 1, 3.5);
 insert into tipo_espacio (nombre) values ('Piscina');
 insert into tipo_espacio (nombre) values ('Quincho');
 insert into tipo_espacio (nombre) values ('Sala de Eventos');
