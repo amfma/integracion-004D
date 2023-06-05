@@ -17,14 +17,14 @@ class Administrador(Base):
     contrasena = db.Column(db.String(32), nullable=False)
     condominio_id = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)
 
-
+@dataclass
 class Condominio(Base):
 
     __tablename__ = 'condominio'
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    direccion = db.Column(db.String(100), nullable=False)
-    nombre = db.Column(db.String(50))
+    id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    direccion:str = db.Column(db.String(100), nullable=False)
+    nombre:str = db.Column(db.String(50))
 
 
 class Conserje(Base):
