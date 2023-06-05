@@ -71,6 +71,12 @@ class Estado(Base):
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     descripcion = db.Column(db.String(20), nullable=False)
 
+class DetallePago(Base):
+
+    __tablename__ = 'detalle_pago'
+    pagos_id = db.Column(db.Integer(), db.ForeignKey('pagos.id'), nullable=False, primary_key=True)
+    deuda_id = db.Column(db.Integer(), db.ForeignKey('deuda.id'), nullable=False, primary_key=True)
+    
 @dataclass
 class Deuda(Base):
     
@@ -130,9 +136,17 @@ class Pagos(Base):
 
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     monto = db.Column(db.Integer(), nullable=False)
-    concepto = db.Column(db.String(100), nullable=False)
+    token = db.Column(db.String(100), nullable=False)
+    fecha = db.Column(db.TIMESTAMP(), nullable=False)
     residente_rut = db.Column(db.String(10), db.ForeignKey('residente.rut'), nullable=False)
     unidad_id = db.Column(db.Integer(), db.ForeignKey('unidad.id'), nullable=False)
+    estado_pago_id = db.Column(db.Integer(), db.ForeignKey('estado_pago.id'), nullable=False)
+
+class EstadoPago(Base):
+
+    __tablename__ = 'estado_pago'
+    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
+    descripcion = db.Column(db.String(20), nullable=False)
 
 @dataclass
 class Reserva(Base):
@@ -177,4 +191,5 @@ class Unidad(Base):
 
     id:int = db.Column(db.Integer(), autoincrement=True, primary_key=True)
     descripcion:str = db.Column(db.String(10), nullable=False)
+    alicuota:float = db.Column(db.Float(), nullable = False)
     condominio_id:int = db.Column(db.Integer(), db.ForeignKey('condominio.id'), nullable=False)
