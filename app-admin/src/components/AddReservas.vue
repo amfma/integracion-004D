@@ -30,7 +30,9 @@
             <input type="text" class="form-control" id="rut" v-model="residente_rut">
         </div>
         <button type="submit" class="btn btn-primary">Crear</button>
-        <button type="button" class="btn btn-danger ml-2" @click="showReservas()">Volver</button>
+        <router-link :to="{ name: 'reservas' }">
+            <button type="button" class="btn btn-danger ml-2">Volver</button>
+        </router-link>
     </form>
     </div>
 </template>
