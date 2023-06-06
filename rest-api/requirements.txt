@@ -11,4 +11,5 @@ Mako==1.2.4
 MarkupSafe==2.1.2
 SQLAlchemy==2.0.12
 typing_extensions==4.5.0
+yagmail==0.15.293
 Werkzeug==2.3.3
