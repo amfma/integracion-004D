@@ -19,6 +19,13 @@
             </router-link>
         </a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link">
+            <router-link :to="{ name: 'nuevo_gasto' }">
+                Nuevo Gasto Común
+            </router-link>
+        </a>
+        </li>
     </ul>
     </nav>
 </template>

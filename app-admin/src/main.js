@@ -4,6 +4,7 @@ import App from './App.vue'
 // Importación de componentes
 import Reservas from '@/views/Reservas'
 import NuevaReserva from '@/views/NuevaReserva'
+import NuevoGastoComun from '@/views/NuevoGastoComun'
 
 // Rutas
 const routes = [
@@ -16,6 +17,11 @@ const routes = [
         path: '/nueva_reserva',
         component: NuevaReserva,
         name: 'nueva_reserva'
+    },
+    {
+        path: '/nuevo_gasto',
+        component: NuevoGastoComun,
+        name: 'nuevo_gasto'
     }
 ]
 // Router
