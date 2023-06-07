@@ -1,6 +1,9 @@
 from app import db
 from models import EspacioComun, Reserva, Residente, Unidad, Deuda, Condominio, Pagos
 import datetime
+from math import floor
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 def get_espacios():
     espacios = EspacioComun.query.all()
@@ -49,13 +52,56 @@ def get_residente(rut):
     residente = Residente.query.filter_by(rut=rut, estado_id=1).first()
     return residente
 
+def get_residentes_unidad(unidad_id):
+    residentes = Residente.query.filter_by(unidad_id=unidad_id, estado_id=1).all()
+    return residentes
+
 def get_unidad(id):
     unidad = Unidad.query.filter_by(id=id).first()
     return unidad
 
+def get_unidades_condominio(condominio_id):
+    unidades = Unidad.query.filter_by(condominio_id=condominio_id).all()
+    return unidades
+
 def get_deudas(unidad_id):
     deudas = Deuda.query.filter_by(unidad_id=unidad_id, pagado='N').all()
     return deudas
+
+def post_deuda(concepto, monto, fecha_emision, fecha_vencimiento, tipo_deuda_id, unidad_id):
+    deuda = Deuda(
+        concepto = concepto,
+        monto = monto,
+        fecha_emision = fecha_emision,
+        fecha_vencimiento = fecha_vencimiento,
+        tipo_deuda_id = tipo_deuda_id,
+        unidad_id = unidad_id,
+        pagado = "N"
+    )
+    db.session.add(deuda)
+    db.session.commit()
+    return deuda.id
+
+def prorratear(condominio_id, monto):
+    unidades = get_unidades_condominio(condominio_id) 
+    for unidad in unidades:
+        alicuota = unidad.alicuota
+        today = date.today()
+        # ingresa la nueva deuda
+        post_deuda(
+            monto = floor(monto * (alicuota/100)),
+            fecha_emision = str(today),
+            fecha_vencimiento = str(today + relativedelta(months=1)),
+            concepto = 'Gasto Común',
+            tipo_deuda_id = 1,
+            unidad_id = unidad.id,
+        )
+        # Envía correo a los usuarios
+        residentes = get_residentes_unidad(unidad.id)
+        for residente in residentes:
+            #enviar correo a residente
+            pass
+    return unidades
 
 def get_condominios():
     condominios = Condominio.query.all()

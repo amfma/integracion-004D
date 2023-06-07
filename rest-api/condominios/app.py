@@ -67,6 +67,20 @@ def api_condominios():
     condominios = apier.get_condominios()
     return make_response(jsonify(condominios), 200, headers)
 
+@app.route('/admin/gastos_comunes', methods=['POST'])
+def api_gastos_comunes():
+    headers = {"Content-Type": "application/json"}
+    data = request.get_json()
+    try:
+        prorratear = apier.prorratear(data['condominio_id'], data['monto'])
+        if prorratear != []:
+            return make_response('Exitoso', 200, headers)
+        else: 
+            return make_response('Condomino no existe', 200, headers)
+    except:
+        respuesta = {'Error': 'Error no especificado'}
+        return make_response(jsonify(respuesta), 400, headers)
+    
 @app.route('/residente/espacios/<int:condominio_id>', methods = ['GET'])
 def list_espacios_condiminio(condominio_id):
     headers = {"Content-Type": "application/json"}
