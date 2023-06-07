@@ -12,4 +12,3 @@ def pagado(usuario, total, mail):
     correo = yagmail.SMTP(direccion_remitente, password=password)
     correo.send(subject='Pago Deuda', to=mail, contents=texto_correo)
 
-pagado('Andrés', 20, 'an.mpodozis@duocuc.cl')
