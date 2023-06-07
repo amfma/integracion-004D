@@ -1,6 +1,7 @@
 from app import db
 from models import EspacioComun, Reserva, Residente, Unidad, Deuda, Condominio, Pagos
 import datetime
+import mailer
 from math import floor
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -87,9 +88,10 @@ def prorratear(condominio_id, monto):
     for unidad in unidades:
         alicuota = unidad.alicuota
         today = date.today()
+        monto_deuda = floor(monto * (alicuota/100))
         # ingresa la nueva deuda
         post_deuda(
-            monto = floor(monto * (alicuota/100)),
+            monto = monto_deuda,
             fecha_emision = str(today),
             fecha_vencimiento = str(today + relativedelta(months=1)),
             concepto = 'Gasto Común',
@@ -99,8 +101,8 @@ def prorratear(condominio_id, monto):
         # Envía correo a los usuarios
         residentes = get_residentes_unidad(unidad.id)
         for residente in residentes:
-            #enviar correo a residente
-            pass
+            usuario = residente.nombres + ' ' + residente.apellidos
+            mailer.cuenta_total(usuario=usuario, valor=monto_deuda, mail=residente.correo)
     return unidades
 
 def get_condominios():

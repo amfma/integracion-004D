@@ -78,8 +78,8 @@ def api_gastos_comunes():
         else: 
             return make_response('Condomino no existe', 200, headers)
     except:
-        respuesta = {'Error': 'Error no especificado'}
-        return make_response(jsonify(respuesta), 400, headers)
+       respuesta = {'Error': 'Error no especificado'}
+       return make_response(jsonify(respuesta), 400, headers)
     
 @app.route('/residente/espacios/<int:condominio_id>', methods = ['GET'])
 def list_espacios_condiminio(condominio_id):
