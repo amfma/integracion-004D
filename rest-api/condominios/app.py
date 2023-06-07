@@ -150,7 +150,7 @@ def pagar():
         return make_response(jsonify(respuesta), 500, headers)
         
 
-@app.route('/api/residente/confirma_pago/<str:token>', methods=['GET'])
+@app.route('/api/residente/confirma_pago/<string:token>', methods=['GET'])
 def verificar(token):
     headers = {"Content-Type": "application/json"}
     try:
