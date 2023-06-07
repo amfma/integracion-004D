@@ -61,7 +61,7 @@ export default{
                 // generar nuevo gasto
                 const nuevo_gasto = {
                     monto: monto,
-                    id_condomiino: condominio_id
+                    condominio_id: condominio_id
                 }
                 this.$emit('add-gasto', nuevo_gasto)
 

@@ -20,9 +20,18 @@ export default{
     },
     methods:{
         // Genera nuevo gasto comun
-        addGasto(nuevo_gasto){
-            // temporal
-            console.log(nuevo_gasto)
+        async addGasto(nuevo_gasto){
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(nuevo_gasto)
+            }
+            const res = await fetch('api/admin/gastos_comunes', requestOptions)
+            if(res.status == 200){
+                alert('Gasto común ingresado con exito')
+            }else{
+                alert('No se ha podido realizar la operación')
+            }
         },
         // Obtiene lista de condominios
         async fetchCondominios(){
