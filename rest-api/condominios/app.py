@@ -3,7 +3,7 @@ from flask import Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from os import environ
-import apier, transbanky
+import apier, transbanky, mailer
 
 app = Flask(__name__)
 app.debug = True
@@ -113,6 +113,12 @@ def get_deudas(id):
 def pagar():
     headers = {"Content-Type": "application/json"}
     data = request.get_json
+    ### EL SIGUIENTE BLOQUE ES SOLO PARA INTEGRAR EL MAIL, DE SER NECESARIO
+    #try:
+     #   residente = apier.get_residente(rut=data['rut'])
+    #except:
+     #   residente = apier.get_residente(rut='1111111111')
+    ####
     deudas = data['deudas']
     total = 0
     for x in deudas:
@@ -121,6 +127,9 @@ def pagar():
         respuesta = transbanky.nueva_transaccion(total)
         for x in deudas:
             apier.pagar_deuda(x)
+        # apier.crear_pago(monto=total, rut=data['rut'], token=respuesta['token'])
+        # mailer.pagado(residente.nombre, total, residente.correo)
+        mailer.pagado('Andrés Mpodozis', total=total, mail='am.mpodozis@duocuc.cl')
         return make_response(jsonify(respuesta), 200, headers)
     except:
         respuesta = {'Error': 'Error con transbank'}

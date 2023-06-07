@@ -1,5 +1,6 @@
 from app import db
-from models import EspacioComun, Reserva, Residente, Unidad, Deuda, Condominio
+from models import EspacioComun, Reserva, Residente, Unidad, Deuda, Condominio, Pagos
+import datetime
 
 def get_espacios():
     espacios = EspacioComun.query.all()
@@ -67,4 +68,18 @@ def get_valor_deuda(deuda_id):
 def pagar_deuda(deuda_id):
     deuda = Deuda.query.filter_by(id=deuda_id).first()
     deuda.pagado = 'P'
+    db.session.commit()
+
+def crear_pago(rut, monto, token):
+    residente = Residente.query.filter_by(rut=rut).first()
+    unidad_id = residente.unidad_id
+    pago = Pagos(
+        monto = monto,
+        token = token,
+        residente_rut = rut,
+        unidad_id = unidad_id,
+        fecha = datetime.datetime.now(),
+        estado_pago_id = 1
+    )
+    db.session.add(pago)
     db.session.commit()
