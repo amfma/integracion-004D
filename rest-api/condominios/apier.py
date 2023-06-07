@@ -59,3 +59,12 @@ def get_deudas(unidad_id):
 def get_condominios():
     condominios = Condominio.query.all()
     return condominios
+
+def get_valor_deuda(deuda_id):
+    deuda = Deuda.query.filter_by(id=deuda_id).first()
+    return deuda.monto
+
+def pagar_deuda(deuda_id):
+    deuda = Deuda.query.filter_by(id=deuda_id).first()
+    deuda.pagado = 'P'
+    db.session.commit()

@@ -3,7 +3,7 @@ from flask import Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 from os import environ
-import apier
+import apier, transbanky
 
 app = Flask(__name__)
 app.debug = True
@@ -108,6 +108,38 @@ def get_deudas(id):
     headers = {"Content-Type": "application/json"}
     deudas = apier.get_deudas(unidad_id=id)
     return make_response(jsonify(deudas), 200, headers)
+
+@app.route('/api/residente/pago', methods=['POST'])
+def pagar():
+    headers = {"Content-Type": "application/json"}
+    data = request.get_json
+    deudas = data['deudas']
+    total = 0
+    for x in deudas:
+        total += apier.get_valor_deuda(x)
+    try:
+        respuesta = transbanky.nueva_transaccion(total)
+        for x in deudas:
+            apier.pagar_deuda(x)
+        return make_response(jsonify(respuesta), 200, headers)
+    except:
+        respuesta = {'Error': 'Error con transbank'}
+        return make_response(jsonify(respuesta), 500, headers)
+        
+
+@app.route('/api/residente/confirma_pago/<str:token>', methods=['GET'])
+def verificar(token):
+    headers = {"Content-Type": "application/json"}
+    try:
+        respuesta = transbanky.confirmar_transaccion(token=token)
+        if respuesta['vci'] == "TSY":
+            return make_response(jsonify(respuesta), 200, headers)
+        else:
+            return make_response(jsonify(respuesta), 400, headers)
+    except:
+        respuesta = {'Error': 'Error no especificado'}
+        return make_response(jsonify(respuesta), 400, headers)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
