@@ -5,7 +5,11 @@
     <!-- Barra de busqueda -->
     <div class="row mb-2 mt-3">
         <div class="col ml-1 striped-border">
-            <button class="btn btn-success" @click="showReservas()">Nueva Reserva</button>
+            <router-link :to="{ name: 'nueva_reserva' }">
+                <button class="btn btn-success">
+                        Nueva Reserva
+                </button>
+            </router-link>
         </div>
         <div class="col col-auto">
             <form class="form-inline" @submit="searchReserva">

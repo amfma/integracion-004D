@@ -6,7 +6,25 @@
     <!-- Links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-        <a class="nav-link" @click="showReservas()">Reservas</a>
+        <a class="nav-link">
+            <router-link :to="{ name: 'reservas' }">
+                Reservas
+            </router-link>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link">
+            <router-link :to="{ name: 'nueva_reserva' }">
+                Nueva Reserva
+            </router-link>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link">
+            <router-link :to="{ name: 'nuevo_gasto' }">
+                Nuevo Gasto Común
+            </router-link>
+        </a>
         </li>
     </ul>
     </nav>
