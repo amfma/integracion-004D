@@ -34,7 +34,7 @@
                 <td>{{ this.currencyFormat(total) }}</td>
                 <td>
                     <div class="col striped-border">
-                        <button class="btn btn-success">Pagar</button>
+                        <button class="btn btn-success" @click="generarPago()">Pagar</button>
                     </div>
                 </td>
             </tr>
@@ -89,6 +89,9 @@ export  default {
                 currency: 'CLP'
             }
             return Intl.NumberFormat('es-CL', format).format(number)
+        },
+        generarPago(){
+            this.$emit('generar-pago', this.porPagar)
         }
     }
 }

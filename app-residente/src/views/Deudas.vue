@@ -4,6 +4,7 @@
     </div>
     <DeudasList
     :deudas="this.deudas"
+    @generar-pago="generarPago"
     />
     <!-- Barra superior-->
     <div class="row mt-1 justify-content-start">
@@ -46,6 +47,29 @@ export default {
             const data = await res.json()
             this.residente = data
         },
+        //Inicia un nuevo pago
+        async generarPago(porPagar){
+            const nuevo_pago = {
+                deudas: JSON.parse(JSON.stringify(porPagar)),
+                rut: this.residente.rut
+            }
+            console.log(JSON.stringify(nuevo_pago))
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(nuevo_pago)
+            }
+            const res = await fetch('/api/residente/pago', requestOptions)
+
+            if(res.status == 200){
+                const data = await res.json()
+                console.log(data)
+                // redireccion a webpay
+                window.location.href = `${data.url}?token_ws=${data.token}`;
+            }else{
+                alert('No se ha podido realizar la operación')
+            }
+        }
     },
     async created(){
         this.fetchDeudas('1')

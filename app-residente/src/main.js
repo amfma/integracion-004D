@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import App from './App.vue'
 // Impotación de componentes
 import Reservas from './views/Reservas'
 import Deudas from '@/views/Deudas'
+import Pago from '@/views/Pago'
 
 // Rutas
 const routes = [
@@ -16,11 +17,16 @@ const routes = [
         path: '/deudas',
         component: Deudas,
         name: 'deudas'
+    },
+    {
+        path: '/confirmacion_pago',
+        component: Pago,
+        name: '/confirmacion_pago'
     }
 ]
 // Router
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
 

@@ -123,10 +123,10 @@ def get_deudas(id):
     deudas = apier.get_deudas(unidad_id=id)
     return make_response(jsonify(deudas), 200, headers)
 
-@app.route('/api/residente/pago', methods=['POST'])
+@app.route('/residente/pago', methods=['POST'])
 def pagar():
     headers = {"Content-Type": "application/json"}
-    data = request.get_json
+    data = request.get_json()
     ### EL SIGUIENTE BLOQUE ES SOLO PARA INTEGRAR EL MAIL, DE SER NECESARIO
     #try:
      #   residente = apier.get_residente(rut=data['rut'])
@@ -150,7 +150,7 @@ def pagar():
         return make_response(jsonify(respuesta), 500, headers)
         
 
-@app.route('/api/residente/confirma_pago/<string:token>', methods=['GET'])
+@app.route('/residente/confirma_pago/<string:token>', methods=['GET'])
 def verificar(token):
     headers = {"Content-Type": "application/json"}
     try:

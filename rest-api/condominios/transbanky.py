@@ -4,7 +4,7 @@ from transbank.common.integration_type import IntegrationType
 
 #Orden de compra para usar en las pruebas
 ORDEN = str(random.randrange(1000000, 99999999))
-URL = 'api/url'
+URL = 'http://localhost:8081/confirmacion_pago'
 SESION = str(random.randrange(1000000, 99999999))
 
 def nueva_transaccion(monto):
