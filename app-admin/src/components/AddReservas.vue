@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="rut">Rut residente</label>
-            <input type="text" class="form-control" id="rut" v-model="residente_rut">
+            <input type="text" class="form-control" id="rut" v-model="residente_rut" @input="formatearRut($event.target.value)">
         </div>
         <button type="submit" class="btn btn-primary">Crear</button>
         <router-link :to="{ name: 'reservas' }">
@@ -65,7 +65,7 @@
                     horario_id: this.horario_id,
                     pagado: this.pagado,
                     fecha: this.fecha,
-                    rut: this.residente_rut
+                    rut: this.limpiarRut(this.residente_rut).replace(/^(\d{7,8})([\dK])$/,'$1-$2')
                 }
                 this.$emit('new-reserva', newReserva)
 
@@ -76,6 +76,33 @@
                 this.fecha = '',
                 this.residente_rut = ''
             },
+
+            // Formateo dinámico de rut 
+            formatearRut(rut){
+                rut = this.limpiarRut(rut)
+                const largo_rut = rut.length
+                if (largo_rut < 7){
+                    this.residente_rut = rut.replace(/^(\d{1,3})(\d{3})$/, "$1.$2")
+                }else if(largo_rut < 8){
+                    this.residente_rut = rut.replace(/^(\d{1})(\d{3})(\d{3})$/, "$1.$2.$3")
+                }else{
+                    this.residente_rut = rut.replace(/^(\d{1,2})(\d{3})(\d{3})([\dK])$/, "$1.$2.$3-$4")
+                }
+            },
+
+            limpiarRut(rut){
+                // deja solo numeros y letra k, luego toma primeros 9 caracteres
+                rut = rut.toUpperCase().replace(/[^\dK]/g,'').slice(0,9)
+                const numeros_rut = rut.replace(/\D/g,'')
+                // permite entre 1 y 7 digitos o entre 7 y 8 digitos + digito o "K"
+                const regex_rut = /^\d{1,7}$|^\d{7,8}[\dK]$/
+                if (regex_rut.test(rut)){
+                    return rut
+                }else{
+                    return numeros_rut
+                }
+            },
+
             showReservas(){
             this.$emit('toggle-reservas')
             }
